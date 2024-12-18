@@ -1,5 +1,5 @@
 
-package src;
+
 import java.util.*;
 /**
  * @author Julius Bates
@@ -33,12 +33,22 @@ public class BST {
     			current=current.left;
     		}
     	}
+
     	while(key>current.key) {
     		if(current.right==null) {
     			current.right=new Node(key);
     			return;
     		}else {
     			current=current.right;
+    		}
+    	}
+
+		while(key <= current.key) {
+    		if(current.left==null) {
+    			current.left=new Node(key);
+    			return;
+    		}else {
+    			current=current.left;
     		}
     	}
     }
@@ -124,7 +134,7 @@ public class BST {
     			current=current.left;
     		}
     	}
-    	
+
     	
     	return out;
     }
@@ -143,14 +153,14 @@ public class BST {
 			}
 			out+="\n";
 		}
-    	
+
     	return out;
         
     }
     //precondition:   the root is non-null and r is an empty nested arraylist
     //postcondition: returns an arraylist containing the jey of each node in different arraylists based on the depth in the tree
     public ArrayList<ArrayList<Integer>> stringHelper(Node curr, ArrayList<ArrayList<Integer>> r, int depth){
-    	//Node last=root;
+    	Node last=root;
     	Integer current=null;
     	ArrayList<Integer> level=new ArrayList<Integer>();
     	if(depth==0){// at head
@@ -166,7 +176,7 @@ public class BST {
 				return r;
 			}else {
 				//for(int i=1;i<=depth;i++) {
-				
+				level.clear();
 				r.add(depth,level);
 				if(curr.left != null) {
 					current=curr.left.key;
@@ -181,17 +191,34 @@ public class BST {
 				//level=stringHelperHelper(curr,level,depth);
 
 				//r.add(depth, level);
+				if(depth>r.size()){
+				level.clear();
+				r.add(depth,level);
+				}
 				for(int i=0;i<=depth;i++) {
-				if(curr.left != null) {
 
-	    			r= stringHelper(curr.left,r,depth+1);
-
+				if(last.left != null) {
+					if(i==depth){
+						current=last.left.key;
+					r.get(depth).add(current);
+					}else{
+						last=last.left;
+					}
+	    			//r= stringHelper(curr.left,r,depth+1);
+				}
+			}
+			last=root;
+			for(int i=0;i<=depth;i++) {
+	    		if(last.right != null) {
+	    			if(i==depth){
+						current=last.right.key;
+					r.get(depth).add(current);
+					}else{
+						last=last.right;
+					}
+	    			//r=stringHelper(curr.right, r,depth+1);
 	    		}
-	    		if(curr.right != null) {
-	    			
-	    			r=stringHelper(curr.right, r,depth+1);
-	    		}
-	    		
+	    		//curr=last;
 				}
 			}
 			
@@ -274,14 +301,14 @@ public class BST {
       printTree(root.right, trunk, true);
 
       if (prev == null) {
-          trunk.str = "———";
+          trunk.str = "ï¿½ï¿½ï¿½";
       }
       else if (isLeft) {
-          trunk.str = ".———";
+          trunk.str = ".ï¿½ï¿½ï¿½";
           prev_str = "   |";
       }
       else {
-          trunk.str = "`———";
+          trunk.str = "`ï¿½ï¿½ï¿½";
           prev.str = prev_str;
       }
 

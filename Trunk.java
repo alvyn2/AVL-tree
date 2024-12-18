@@ -1,4 +1,4 @@
-package src;
+
 //this goes into it's own file
 public class Trunk
 {
