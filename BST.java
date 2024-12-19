@@ -160,16 +160,17 @@ public class BST {
     //precondition:   the root is non-null and r is an empty nested arraylist
     //postcondition: returns an arraylist containing the jey of each node in different arraylists based on the depth in the tree
     public ArrayList<ArrayList<Integer>> stringHelper(Node curr, ArrayList<ArrayList<Integer>> r, int depth){
-    	Node last=root;
+    	System.out.println("stringHelper called on "+ curr.key);
+		
     	Integer current=null;
     	ArrayList<Integer> level=new ArrayList<Integer>();
     	if(depth==0){// at head
     		//gets root which is the only node in the top depth
-    	level=new ArrayList<Integer>();
+    	//level=new ArrayList<Integer>();
     	current=root.key;
     	level.add(current);
-    	r.add(0,level);
-    	
+    	r.add(depth,level);
+    	//System.out.println("root level added");
     	return stringHelper(root,r,1);
 		}else {
 			if(curr.left==null && curr.right==null) {// base case
@@ -177,27 +178,35 @@ public class BST {
 			}else {
 				//for(int i=1;i<=depth;i++) {
 				level.clear();
+				if(depth>=r.size()){
 				r.add(depth,level);
+				}
+				//System.out.println("stringhelper called, added new level");
 				if(curr.left != null) {
 					current=curr.left.key;
 					r.get(depth).add(current);
+					r=stringHelper(curr.left,r,depth+1);
 				}
 				if(curr.right != null) {
 					current=curr.right.key;
 					r.get(depth).add(current);
+					r=stringHelper(curr.right,r,depth+1);
 				}
-		
+			
 				//}
 				//level=stringHelperHelper(curr,level,depth);
 
 				//r.add(depth, level);
-				if(depth>r.size()){
+				/*
+				if(depth>r.size()-1){
 				level.clear();
 				r.add(depth,level);
+				System.out.println("another level added");
 				}
-				for(int i=0;i<=depth;i++) {
+				*/
+				/*for(int i=0;i<=depth;i++) {
 
-				if(last.left != null) {
+				if(curr.left != null) {
 					if(i==depth){
 						current=last.left.key;
 					r.get(depth).add(current);
@@ -206,12 +215,12 @@ public class BST {
 					}
 	    			//r= stringHelper(curr.left,r,depth+1);
 				}
-			}
-			last=root;
-			for(int i=0;i<=depth;i++) {
+			}*/
+			//last=root;
+			/*for(int i=0;i<=depth;i++) {
 	    		if(last.right != null) {
 	    			if(i==depth){
-						current=last.right.key;
+						current=curr.right.key;
 					r.get(depth).add(current);
 					}else{
 						last=last.right;
@@ -220,9 +229,9 @@ public class BST {
 	    		}
 	    		//curr=last;
 				}
-			}
-			
-    		/*if(curr.left != null) {
+			}*/
+			/* 
+    		if(curr.left != null) {
     			current=curr.left.key;
     			level.add(current);
         		//r=stringHelper(curr.left,r,depth+1);
@@ -243,11 +252,12 @@ public class BST {
     		}
     		*/
     		//r.add(level);
-    		
-
     		return r;
+			}
+    		//return r;
     		//return stringHelper(curr.right, r,depth+1);
     	}
+	
     	
     	//return r;
     }
