@@ -160,7 +160,7 @@ public class BST {
     //precondition:   the root is non-null and r is an empty nested arraylist
     //postcondition: returns an arraylist containing the jey of each node in different arraylists based on the depth in the tree
     public ArrayList<ArrayList<Integer>> stringHelper(Node curr, ArrayList<ArrayList<Integer>> r, int depth){
-    	System.out.println("stringHelper called on "+ curr.key);
+    	//System.out.println("stringHelper called on "+ curr.key);
 		
     	Integer current=null;
     	ArrayList<Integer> level=new ArrayList<Integer>();

@@ -23,7 +23,8 @@ public class Main {
 	tree.insert(10);
 		//tree.insert(40);
 		//tree.remove(1);
-		System.out.println(tree.toString());
+		//System.out.println(tree.toString());
+		System.out.println(tree.isBSTOrNot());
 	}
 
 }
