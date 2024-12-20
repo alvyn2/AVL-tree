@@ -21,10 +21,16 @@ public class Main {
 	tree.insert(8);
 	tree.insert(9);
 	tree.insert(10);
-		//tree.insert(40);
-		//tree.remove(1);
+	tree.insert(100);
+	tree.insert(-10);
+	tree.insert(-5);
+	//tree.insert(50);
+	//tree.insert(0);
+	tree.remove(8);
+	tree.remove(5);
+//tree.remove(20);
 		//System.out.println(tree.toString());
-		System.out.println(tree.isBSTOrNot());
+		tree.printTree();
 	}
 
 }

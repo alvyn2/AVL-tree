@@ -88,19 +88,30 @@ public class BST {
     	
     	return found;
     }
-    //precondition:key is a falid int and root is not null    
+    //precondition:key is a valid int and root is not null    
     //postcondition:node is removed from the tree
     int remove(int key){
-    	Node last=null;
+    	Node last=root;
     	Node current=root;
     	Node replace=null;
     	int out=-1;
     	if(root==null) {
     		return -1;
-    	}
+    	}else if(root.key==key){
+			if(root.left!=null){
+				current=root.left;
+			while(current.right!=null){
+				current=current.right;
+			}
+			root.key=current.key;
+			root.left=current.left;
+			
+		}
+			return key;
+		}
     	while(key <= current.key) {
     		if(current.left==null) {
-    			//return -1;
+    			return -1;
     		}else if(current.key==key){
     			out=key;
     			if(current.left.left==null || current.left.right == null) {
@@ -127,11 +138,11 @@ public class BST {
     	}
     	while(key>=current.key) {
     		if(current.right==null) {
-    			
+    			return -1;
     		}else if(current.key==key){
     			return key;
     		}else {
-    			current=current.left;
+    			current=current.right;
     		}
     	}
 
@@ -262,7 +273,41 @@ public class BST {
     	//return r;
     }
 
+public void rightRotate(Node top){
+	Integer temp=top.key;
+	top.key=top.left.key;
+	top.left.key=temp;
+}
 
+public void leftRotate(Node top){
+	Integer temp=top.key;
+	top.key=top.right.key;
+	top.right.key=temp;
+}
+public int checkBalance(Node curr){
+	int balance=0;
+	if(curr==null){
+		return 0;
+	}else if(curr.left==null && curr.right==null){
+		balance++;// to make balance one if curr is a leaf
+		return balance;
+
+	}else{
+		return balance - checkBalance(curr.left) + checkBalance(curr.right);
+	}
+	/*else if(curr.left !=null){
+		balance-=checkBalance(curr.left);
+		balance--;
+	}else if(curr.right !=null){
+		balance+=checkBalance(curr.right);
+		balance++;
+	}
+	if(curr.left !=null){
+		return balance - checkBalance(curr.left);
+	}
+*/
+
+}
 //new code
 //Add the following functions to your BST
 //Please use this code to verify your tree integrity
@@ -281,6 +326,7 @@ public class BST {
       }
       return false;
   }
+
 
 
 
@@ -311,14 +357,14 @@ public class BST {
       printTree(root.right, trunk, true);
 
       if (prev == null) {
-          trunk.str = "���";
+          trunk.str = "___";
       }
       else if (isLeft) {
-          trunk.str = ".���";
+          trunk.str = ".___";
           prev_str = "   |";
       }
       else {
-          trunk.str = "`���";
+          trunk.str = "`___";
           prev.str = prev_str;
       }
 
