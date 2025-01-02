@@ -272,18 +272,50 @@ public class BST {
     	
     	//return r;
     }
-
+//
+// rotates the left child to top
 public void rightRotate(Node top){
 	Integer temp=top.key;
 	top.key=top.left.key;
 	top.left.key=temp;
 }
-
+//
+//rotates the tree to the left
 public void leftRotate(Node top){
 	Integer temp=top.key;
 	top.key=top.right.key;
 	top.right.key=temp;
 }
+
+//precondition:
+// returns the height of the node 
+private int height(Node node){
+	if(node==null){
+		return 0;
+	}
+	Node c=node;
+	int r=0;
+	int l=0;
+	int h=0;
+	if(c.right!=null){
+		h=1+height(c.right);
+		c=c.right;
+	}
+	if(c.left != null){
+		h=1+height(c.left);
+	}
+	return h;
+}
+//
+//returns the balance at the specified node
+
+private int balance(Node node){
+	int b=0;
+
+
+	return b;
+}
+
 public int checkBalance(Node curr){
 	int balance=0;
 	if(curr==null){
