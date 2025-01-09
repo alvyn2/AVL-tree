@@ -21,14 +21,16 @@ public class BST {
     
     void insert(int key){
     	Node current=root;
+		boolean placed=false;
     	if(root==null) {
     		root=new Node(key);
     		return;
     	}
+		while(placed==false){}
     	while(key <= current.key) {
     		if(current.left==null) {
     			current.left=new Node(key);
-    			return;
+    			placed=true;
     		}else {
     			current=current.left;
     		}
@@ -37,13 +39,14 @@ public class BST {
     	while(key>current.key) {
     		if(current.right==null) {
     			current.right=new Node(key);
-    			return;
+    			placed=true;
     		}else {
     			current=current.right;
     		}
     	}
+	}
 
-		while(key <= current.key) {
+	/* 	while(key <= current.key) {
     		if(current.left==null) {
     			current.left=new Node(key);
     			return;
@@ -51,7 +54,9 @@ public class BST {
     			current=current.left;
     		}
     	}
-    }
+			*/
+    
+		}
     
     
     //precondition: function is called    
@@ -274,17 +279,19 @@ public class BST {
     }
 //
 // rotates the left child to top
-public void rightRotate(Node top){
-	Integer temp=top.key;
-	top.key=top.left.key;
-	top.left.key=temp;
+public void rightRotate(Node top,Node prev){
+	Node temp=top;
+	top=top.left;
+	top.right=temp;
+	prev.left=top;
 }
 //
 //rotates the tree to the left
-public void leftRotate(Node top){
-	Integer temp=top.key;
-	top.key=top.right.key;
-	top.right.key=temp;
+public void leftRotate(Node top,Node prev){
+	Node temp=top;
+	top=top.right;
+	top.left=temp;
+	prev.right=top;
 }
 
 //precondition:
@@ -411,4 +418,7 @@ public int checkBalance(Node curr){
       printTree(root.left, trunk, false);
   }
 
+
+
+  
 }
