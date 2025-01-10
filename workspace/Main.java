@@ -32,6 +32,10 @@ public class Main {
 		tree.insert(31);
 		tree.insert(43);
 		tree.insert(51);
+		
+		//tree.insert(5);
+		//tree.insert(3);
+		//tree.insert(7);
 		System.out.print(tree.toString());
 		tree.printTree();
 	}

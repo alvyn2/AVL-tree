@@ -22,14 +22,15 @@ public class BST {
     void insert(int key){
     	Node current=root;
 		boolean placed=false;
-    	if(root==null) {
-    		root=new Node(key);
-    		return;
+		Node in=new Node(key);
+    	if(current==null) {
+    		root=in;
+			placed=true;
     	}
-		while(placed==false){}
+		while(placed==false && current !=null){
     	while(key <= current.key) {
     		if(current.left==null) {
-    			current.left=new Node(key);
+    			current.left=in;
     			placed=true;
     		}else {
     			current=current.left;
@@ -38,26 +39,26 @@ public class BST {
 
     	while(key>current.key) {
     		if(current.right==null) {
-    			current.right=new Node(key);
+    			current.right=in;
     			placed=true;
     		}else {
     			current=current.right;
     		}
     	}
-	}
+	
 
-	/* 	while(key <= current.key) {
+	 	/*while(key <= current.key) {
     		if(current.left==null) {
-    			current.left=new Node(key);
-    			return;
+    			current.left=in;
+    			placed=true;
     		}else {
     			current=current.left;
     		}
-    	}
-			*/
-    
+    	}*/
+			
 		}
-    
+
+	}
     
     //precondition: function is called    
     //postcondition: returns true if there is a node with the key, false if there is no node with the same value as key in the tree
@@ -298,19 +299,26 @@ public void leftRotate(Node top,Node prev){
 // returns the height of the node 
 private int height(Node node){
 	if(node==null){
-		return 0;
+		return -1;
 	}
 	Node c=node;
 	int r=0;
 	int l=0;
 	int h=0;
 	if(c.right!=null){
-		h=1+height(c.right);
+		r=1+height(c.right);
 		c=c.right;
 	}
 	if(c.left != null){
-		h=1+height(c.left);
+		l=1+height(c.left);
 	}
+	if(l>r){
+		h=l;
+	}
+	if(r>l){
+		h=r;
+	}
+	
 	return h;
 }
 //
@@ -318,8 +326,9 @@ private int height(Node node){
 
 private int balance(Node node){
 	int b=0;
-
-
+	int l=height(node.left);
+	int r=height(node.right);
+	b=r-l;
 	return b;
 }
 
