@@ -8,7 +8,7 @@ import java.util.*;
  */
 public class BST {
 	Node root=null;
-	
+	Stack<Node> path=new Stack<Node>();
 	
     public BST()
     {
@@ -23,38 +23,35 @@ public class BST {
     	Node current=root;
 		boolean placed=false;
 		Node in=new Node(key);
-    	if(current==null) {
+    	path.empty();
+		if(current==null) {
     		root=in;
 			placed=true;
+			
     	}
 		while(placed==false && current !=null){
-    	while(key <= current.key) {
+    	while(current !=null && key <= current.key) {
     		if(current.left==null) {
     			current.left=in;
     			placed=true;
+				current=null;
     		}else {
+				path.add(current);
     			current=current.left;
     		}
     	}
 
-    	while(key>current.key) {
+    	while(current !=null && key>current.key) {
     		if(current.right==null) {
     			current.right=in;
     			placed=true;
+				current=null;
     		}else {
+				path.add(current);
     			current=current.right;
     		}
     	}
 	
-
-	 	/*while(key <= current.key) {
-    		if(current.left==null) {
-    			current.left=in;
-    			placed=true;
-    		}else {
-    			current=current.left;
-    		}
-    	}*/
 			
 		}
 
@@ -101,12 +98,14 @@ public class BST {
     	Node current=root;
     	Node replace=null;
     	int out=-1;
+		path.empty();
     	if(root==null) {
     		return -1;
     	}else if(root.key==key){
 			if(root.left!=null){
 				current=root.left;
 			while(current.right!=null){
+				path.add(current);
 				current=current.right;
 			}
 			root.key=current.key;
