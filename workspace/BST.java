@@ -8,7 +8,7 @@ import java.util.*;
  */
 public class BST {
 	Node root=null;
-	Stack<Node> path=new Stack<Node>();
+	ArrayList<Node> path=new ArrayList<Node>();
 	
     public BST()
     {
@@ -23,7 +23,7 @@ public class BST {
     	Node current=root;
 		boolean placed=false;
 		Node in=new Node(key);
-    	path.empty();
+    	path.clear();
 		if(current==null) {
     		root=in;
 			placed=true;
@@ -54,20 +54,27 @@ public class BST {
 	
 			
 		}
-		for(int i=0;i<path.size();i++){
+	
+		for(int i=0;i<path.size()-1;i++){
 			Node n=path.get(i);
 			if(this.balance(n)>=2){
 				if(this.balance(n.right)>=0){
-					this.rightRotate(n,path.get(i+1));
+					this.leftRotate(n,path.get(i+1));
+					System.out.println("left");
 				}else{
-					this.leftRotate(n.left,n);
+					this.rightRotate(n.left,n);
 				}
 			}else if(this.balance(n)<=-2){
 				if(this.balance(n.left)<=0){
-
+					this.rightRotate(n, path.get(i+1));
+					System.out.println("right");
+				}else{
+					this.leftRotate(n.left,n);
 				}
 			}
 		}
+
+		path.clear();
 
 
 	}
@@ -113,7 +120,7 @@ public class BST {
     	Node current=root;
     	Node replace=null;
     	int out=-1;
-		path.empty();
+		path.clear();
     	if(root==null) {
     		return -1;
     	}else if(root.key==key){
@@ -296,36 +303,39 @@ public class BST {
 // rotates the left child to top
 public void rightRotate(Node subRoot,Node prev){
 	Node temp=subRoot.left;
-	System.out.println("temp = "+ temp.key);
+	//System.out.println("temp = "+ temp.key);
 	//Node temp2=subRoot.right;
 	//subRoot=subRoot.left;
-	if(subRoot.left.right != null){
 	subRoot.left=subRoot.left.right;//step 1
-	}
-	if(prev.right!=null && prev.right.equals(subRoot)){
+	temp.right=subRoot;
+	if(prev.right!=null && prev.right==subRoot){
 		prev.right=temp;
-	}else if(prev.left!=null && prev.left.equals(subRoot)){
+	}else if(prev.left!=null && prev.left==subRoot){
 		prev.left=temp;
+	}else if(prev == null){
+		this.root=temp;
 	}
-	//temp.right=subRoot;
+	
+	//System.out.println("ended");
 	//temp.left=temp2;
 }
 //
 //rotates the tree to the left
+//precondition
+//
 public void leftRotate(Node subRoot,Node prev){
 	Node temp=subRoot.right;
-	Node temp2=subRoot.right;
-	//subRoot=subRoot.left;
-	if(subRoot.left.right != null){
-	subRoot.left=subRoot.left.right;//step 1
-	}
-	if(prev.right==subRoot){
+	//System.out.println("temp = "+ temp.key);
+
+	subRoot.right=subRoot.right.left;//step 1
+	temp.left=subRoot;
+	if(prev.right!=null && prev.right==subRoot){
 		prev.right=temp;
-	}else if(prev.left.equals(subRoot)){
+	}else if(prev.left!=null && prev.left==subRoot){
 		prev.left=temp;
+	}else if(prev == null){
+		this.root=temp;
 	}
-	temp.right=temp2;
-	//temp.left=temp2;
 }
 
 
