@@ -54,6 +54,21 @@ public class BST {
 	
 			
 		}
+		for(int i=0;i<path.size();i++){
+			Node n=path.get(i);
+			if(this.balance(n)>=2){
+				if(this.balance(n.right)>=0){
+					this.rightRotate(n,path.get(i+1));
+				}else{
+					this.leftRotate(n.left,n);
+				}
+			}else if(this.balance(n)<=-2){
+				if(this.balance(n.left)<=0){
+
+				}
+			}
+		}
+
 
 	}
     
@@ -279,20 +294,40 @@ public class BST {
     }
 //
 // rotates the left child to top
-public void rightRotate(Node top,Node prev){
-	Node temp=top;
-	top=top.left;
-	top.right=temp;
-	prev.left=top;
+public void rightRotate(Node subRoot,Node prev){
+	Node temp=subRoot.left;
+	System.out.println("temp = "+ temp.key);
+	//Node temp2=subRoot.right;
+	//subRoot=subRoot.left;
+	if(subRoot.left.right != null){
+	subRoot.left=subRoot.left.right;//step 1
+	}
+	if(prev.right!=null && prev.right.equals(subRoot)){
+		prev.right=temp;
+	}else if(prev.left!=null && prev.left.equals(subRoot)){
+		prev.left=temp;
+	}
+	//temp.right=subRoot;
+	//temp.left=temp2;
 }
 //
 //rotates the tree to the left
-public void leftRotate(Node top,Node prev){
-	Node temp=top;
-	top=top.right;
-	top.left=temp;
-	prev.right=top;
+public void leftRotate(Node subRoot,Node prev){
+	Node temp=subRoot.right;
+	Node temp2=subRoot.right;
+	//subRoot=subRoot.left;
+	if(subRoot.left.right != null){
+	subRoot.left=subRoot.left.right;//step 1
+	}
+	if(prev.right==subRoot){
+		prev.right=temp;
+	}else if(prev.left.equals(subRoot)){
+		prev.left=temp;
+	}
+	temp.right=temp2;
+	//temp.left=temp2;
 }
+
 
 //precondition:
 // returns the height of the node 
