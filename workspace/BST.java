@@ -56,6 +56,7 @@ public class BST {
 		}
 	
 		for(int i=0;i<path.size()-1;i++){
+			Node next;
 			Node n=path.get(i);
 			if(this.balance(n)>=2){
 				if(this.balance(n.right)>=0){
@@ -72,6 +73,7 @@ public class BST {
 					this.leftRotate(n.left,n);
 				}
 			}
+			next=n;
 		}
 
 		path.clear();
@@ -350,11 +352,11 @@ private int height(Node node){
 	int l=0;
 	int h=0;
 	if(c.right!=null){
-		r=1+height(c.right);
+		r=height(c.right);
 		c=c.right;
 	}
 	if(c.left != null){
-		l=1+height(c.left);
+		l=height(c.left);
 	}
 	if(l>r){
 		h=l;
