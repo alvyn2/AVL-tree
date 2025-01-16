@@ -17,7 +17,7 @@ public class BST {
 
     
   //precondition:  function is called and key is a valid and non-null integer
-  //postcondition: a new node is added to the tree with the key inputted and in the right location
+  //postcondition: a new node is added to the tree with the key inputted and in the right location also rebalances the tree if it becomes unbalanced
     
     void insert(int key){
     	Node current=root;
@@ -27,6 +27,7 @@ public class BST {
 		if(current==null) {
     		root=in;
 			placed=true;
+			path.add(current);
 			
     	}
 		while(placed==false && current !=null){
@@ -34,6 +35,7 @@ public class BST {
     		if(current.left==null) {
     			current.left=in;
     			placed=true;
+				path.add(current);
 				current=null;
     		}else {
 				path.add(current);
@@ -45,6 +47,7 @@ public class BST {
     		if(current.right==null) {
     			current.right=in;
     			placed=true;
+				path.add(current);
 				current=null;
     		}else {
 				path.add(current);
@@ -54,23 +57,32 @@ public class BST {
 	
 			
 		}
-	
+		
 		for(int i=0;i<path.size()-1;i++){
-			Node next;
+			System.out.println(path.get(i).key);
+			Node next=path.get(i+1);
 			Node n=path.get(i);
+			System.out.println("balance = "+this.balance(n));
+			System.out.println("cbalance = "+this.checkBalance(n));
 			if(this.balance(n)>=2){
+
 				if(this.balance(n.right)>=0){
-					this.leftRotate(n,path.get(i+1));
+					this.leftRotate(n,next);
 					System.out.println("left");
 				}else{
 					this.rightRotate(n.left,n);
+					this.leftRotate(n,next);
+					System.out.println("d left");
 				}
 			}else if(this.balance(n)<=-2){
+
 				if(this.balance(n.left)<=0){
-					this.rightRotate(n, path.get(i+1));
+					this.rightRotate(n, next);
 					System.out.println("right");
 				}else{
 					this.leftRotate(n.left,n);
+					this.rightRotate(n, next);
+					System.out.println(" d right");
 				}
 			}
 			next=n;
@@ -350,7 +362,7 @@ private int height(Node node){
 	Node c=node;
 	int r=0;
 	int l=0;
-	int h=0;
+	int h=1;
 	if(c.right!=null){
 		r=height(c.right);
 		c=c.right;
@@ -359,21 +371,32 @@ private int height(Node node){
 		l=height(c.left);
 	}
 	if(l>r){
-		h=l;
+		h+=l;
+	}else{
+		h+=r;
 	}
-	if(r>l){
-		h=r;
-	}
-	
+	System.out.println("n"+node.key+"height="+h);
 	return h;
 }
 //
 //returns the balance at the specified node
 
 private int balance(Node node){
+	System.out.println("node:"+ node.key);
 	int b=0;
-	int l=height(node.left);
-	int r=height(node.right);
+	int r;
+	int l;
+	if(node.left!=null){
+	l=height(node.left);
+	}else{
+		l=0;
+	}
+	if(node.right!=null){
+	r=height(node.right);
+	}else{
+		r=0;
+	}
+	System.out.print("r:"+r);
 	b=r-l;
 	return b;
 }
@@ -386,20 +409,19 @@ public int checkBalance(Node curr){
 		balance++;// to make balance one if curr is a leaf
 		return balance;
 
-	}else{
-		return balance - checkBalance(curr.left) + checkBalance(curr.right);
-	}
-	/*else if(curr.left !=null){
+	}else if(curr.left !=null){
 		balance-=checkBalance(curr.left);
 		balance--;
 	}else if(curr.right !=null){
 		balance+=checkBalance(curr.right);
 		balance++;
+	}else{
+		return balance - checkBalance(curr.left) + checkBalance(curr.right);
 	}
-	if(curr.left !=null){
-		return balance - checkBalance(curr.left);
-	}
-*/
+
+		return balance;
+
+
 
 }
 //new code
