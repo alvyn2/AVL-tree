@@ -64,24 +64,24 @@ public class BST {
 			Node n=path.get(i);
 			System.out.println("balance = "+this.balance(n));
 			System.out.println("cbalance = "+this.checkBalance(n));
-			if(this.balance(n)>=2){
+			if(this.balance(next)>=2){
 
-				if(this.balance(n.right)>=0){
-					this.leftRotate(n,next);
+				if(this.balance(next.right)>=0){
+					this.leftRotate(next,n);
 					System.out.println("left");
 				}else{
-					this.rightRotate(n.left,n);
-					this.leftRotate(n,next);
+					this.rightRotate(next.left,next);
+					this.leftRotate(next,n);
 					System.out.println("d left");
 				}
-			}else if(this.balance(n)<=-2){
+			}else if(this.balance(next)<=-2){
 
-				if(this.balance(n.left)<=0){
-					this.rightRotate(n, next);
+				if(this.balance(next.left)<=0){
+					this.rightRotate(next, n);
 					System.out.println("right");
 				}else{
-					this.leftRotate(n.left,n);
-					this.rightRotate(n, next);
+					this.leftRotate(next.left,next);
+					this.rightRotate(next, n);
 					System.out.println(" d right");
 				}
 			}
@@ -375,14 +375,14 @@ private int height(Node node){
 	}else{
 		h+=r;
 	}
-	System.out.println("n"+node.key+"height="+h);
+	//System.out.println("n"+node.key+"height="+h);
 	return h;
 }
 //
 //returns the balance at the specified node
 
 private int balance(Node node){
-	System.out.println("node:"+ node.key);
+	
 	int b=0;
 	int r;
 	int l;
@@ -396,12 +396,13 @@ private int balance(Node node){
 	}else{
 		r=0;
 	}
-	System.out.print("r:"+r);
+
 	b=r-l;
+	System.out.println("node:"+ node.key+ "balance: " +b);
 	return b;
 }
 
-public int checkBalance(Node curr){
+public int checkBalance(Node curr){// not used 
 	int balance=0;
 	if(curr==null){
 		return 0;
