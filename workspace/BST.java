@@ -365,7 +365,7 @@ private int height(Node node){
 	int h=1;
 	if(c.right!=null){
 		r=height(c.right);
-		c=c.right;
+		//c=c.right;
 	}
 	if(c.left != null){
 		l=height(c.left);
