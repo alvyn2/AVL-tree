@@ -70,7 +70,7 @@ public class BST {
 					this.leftRotate(next,n);
 					System.out.println("left");
 				}else{
-					this.rightRotate(next.left,next);
+					this.rightRotate(next.right,next);
 					this.leftRotate(next,n);
 					System.out.println("d left");
 				}
@@ -136,9 +136,10 @@ public class BST {
     	int out=-1;
 		path.clear();
     	if(root==null) {
-    		return -1;
+    		return out;
     	}else if(root.key==key){
 			if(root.left!=null){
+				path.add(current);
 				current=root.left;
 			while(current.right!=null){
 				path.add(current);
@@ -148,7 +149,7 @@ public class BST {
 			root.left=current.left;
 			
 		}
-			return key;
+			out= key;
 		}
     	while(key <= current.key) {
     		if(current.left==null) {
@@ -171,7 +172,7 @@ public class BST {
     				last.left=null;
     				
     			}
-    			return key;
+    			out= key;
     		}else {
     			last=current;
     			current=current.left;
@@ -183,11 +184,43 @@ public class BST {
     		}else if(current.key==key){
     			return key;
     		}else {
+				path.add(current);
     			current=current.right;
     		}
     	}
 
-    	
+    	for(int i=0;i<path.size()-1;i++){
+			System.out.println(path.get(i).key);
+			Node next=path.get(i+1);
+			Node n=path.get(i);
+			System.out.println("balance = "+this.balance(n));
+			System.out.println("cbalance = "+this.checkBalance(n));
+			if(this.balance(next)>=2){
+
+				if(this.balance(next.right)>=0){
+					this.leftRotate(next,n);
+					System.out.println("left");
+				}else{
+					this.rightRotate(next.right,next);
+					this.leftRotate(next,n);
+					System.out.println("d left");
+				}
+			}else if(this.balance(next)<=-2){
+
+				if(this.balance(next.left)<=0){
+					this.rightRotate(next, n);
+					System.out.println("right");
+				}else{
+					this.leftRotate(next.left,next);
+					this.rightRotate(next, n);
+					System.out.println(" d right");
+				}
+			}
+			next=n;
+		}
+
+		path.clear();
+
     	return out;
     }
 
@@ -357,7 +390,7 @@ public void leftRotate(Node subRoot,Node prev){
 // returns the height of the node 
 private int height(Node node){
 	if(node==null){
-		return -1;
+		return 0;
 	}
 	Node c=node;
 	int r=0;
@@ -365,7 +398,7 @@ private int height(Node node){
 	int h=1;
 	if(c.right!=null){
 		r=height(c.right);
-		//c=c.right;
+
 	}
 	if(c.left != null){
 		l=height(c.left);
