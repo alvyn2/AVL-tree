@@ -322,12 +322,12 @@ public void rightRotate(Node subRoot,Node prev){
 	//subRoot=subRoot.left;
 	subRoot.left=subRoot.left.right;//step 1
 	temp.right=subRoot;
-	if(prev.right!=null && prev.right==subRoot){
+	if(prev == null){
+		this.root=temp;
+	}if(prev.right!=null && prev.right==subRoot){
 		prev.right=temp;
 	}else if(prev.left!=null && prev.left==subRoot){
 		prev.left=temp;
-	}else if(prev == null){
-		this.root=temp;
 	}
 	
 	//System.out.println("ended");
@@ -343,12 +343,12 @@ public void leftRotate(Node subRoot,Node prev){
 
 	subRoot.right=subRoot.right.left;//step 1
 	temp.left=subRoot;
-	if(prev.right!=null && prev.right==subRoot){
+	if(prev == null){
+		this.root=temp;
+	}if(prev.right!=null && prev.right==subRoot){
 		prev.right=temp;
 	}else if(prev.left!=null && prev.left==subRoot){
 		prev.left=temp;
-	}else if(prev == null){
-		this.root=temp;
 	}
 }
 
